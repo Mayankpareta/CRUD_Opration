@@ -7,7 +7,7 @@ function NewPass() {
     const { token } = useParams();
     const navigate = useNavigate()
     
-    const API_URL = 'http://192.168.0.7:8000/api/forgetpassword/reset-password'
+    const API_URL = 'https://crud-operation-backend-9ld8.onrender.com'
 
 
     const handleLogin = async (e) => {
