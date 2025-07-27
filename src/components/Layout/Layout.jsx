@@ -5,7 +5,7 @@ import Footer from '../Footer/Footer';
 import { Outlet } from 'react-router-dom';
 import axios from 'axios';
 
-const API_URL = 'http://192.168.0.7:8000/api/users';
+const API_URL = 'https://crud-operation-backend-9ld8.onrender.com';
 
 function Layout() {
   const [users , setUsers ] = useState([]);
