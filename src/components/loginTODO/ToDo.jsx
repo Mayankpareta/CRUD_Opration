@@ -7,6 +7,7 @@ function ToDo() {
     const navigate = useNavigate()
     // const { users } = useOutletContext()
     const [ todoData, setTodoData] = useState([]);
+    const [ error , setError ] = useState('');
     const [ editingTodoId, setEditingTodoId] = useState(null);
     const [ todo, setTodo] = useState({
         title: '',
@@ -14,7 +15,7 @@ function ToDo() {
     })
     
     
-    const API_URL = 'http://192.168.0.7:8000/api/todo'
+    const API_URL = 'http://localhost:8000/api/todo'
 
 
     const token = localStorage.getItem('token')
@@ -28,8 +29,8 @@ function ToDo() {
                 }
             })
             setTodoData(res.data)  
-            setUserName(res.data[0].user) 
-            console.log("todoData", res.data);
+            //setUserName(res.data[0].user) 
+      
             
         } catch (error) {
             console.error('error', error)
@@ -57,6 +58,7 @@ function ToDo() {
     
     // put and post method
     const handleClick = async () => { 
+        setError('');
         try {  
             if(editingTodoId) {                
                 await axios.put(`${API_URL}/${editingTodoId}`, todo , {
@@ -78,7 +80,11 @@ function ToDo() {
             })
             getMethod();
         } catch (error) {
-            console.error("Error", error)
+            if(error.response) {
+                setError(error.response.data.message || 'Please Enter Todo');
+            } else {
+                setError("Please Enter Todo");
+            }
         }
     }    
     
@@ -107,7 +113,7 @@ function ToDo() {
     
 
   return (
-    <div className='bg-[#899878] min-h-[513px] py-10'>
+    <div className='g-[#899878] text-white min-h-[470px] py-10'>
         <div>
             <div>
                 <h2>{todoData.map(todo => {
@@ -125,11 +131,12 @@ function ToDo() {
                     maxLength="20" 
                     value={todo.title}
                     onChange={handleChange}
-                    className='border border-black px-2'
+                    className='border border-gray-800 w-3/12 mx-auto  px-2'
                     type='text'
                     placeholder='Enter Title'
                     />
                 </div>
+                <div className='text-red-300 text-[13px] pb-2'><p>{error}</p></div>
                 
                 {/* <div className='my-3'>
                     <input 
@@ -151,18 +158,18 @@ function ToDo() {
                     <ol >                        
                     {todoData.map((todo) => {
                        return <div key={todo._id} className='my-2 text-center'><li
-                       className='bg-[#707C64] w-96 px-1 py-2 '
+                       className='g-[#707C64]  bg-white/10 rounded  px-3 py-2 '
                        >
-                        <span className='text-xl'>Title : </span>
+                        <span className='text-lg'>Title : </span>
                         <div className='inline max-w-52 text-xl font-bold'>{todo.title} </div>
                         <div className='inline w-40'>
                             <button
                             onClick={() => editHandleClick(todo)}
-                            className='border border-black px-3 ml-2 hover:bg-[#4b5446]'
+                            className='border border-black px-3 ml-2 hover:bg-white/20 rounded'
                             >Edit</button>
                             <button
                             onClick={() => deleteHandleChange(todo._id)}
-                            className='border border-black px-3 ml-2 hover:bg-[#4b5446]'
+                            className='border border-black px-3 ml-2 hover:bg-white/20 rounded'
                             >Delete</button>
                         </div>
                         </li>

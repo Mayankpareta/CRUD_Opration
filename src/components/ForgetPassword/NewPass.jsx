@@ -7,7 +7,7 @@ function NewPass() {
     const { token } = useParams();
     const navigate = useNavigate()
     
-    const API_URL = 'http://192.168.0.7:8000/api/forgetpassword/reset-password'
+    const API_URL = 'http://localhost/api/forgetpassword/reset-password'
 
 
     const handleLogin = async (e) => {
@@ -24,7 +24,7 @@ function NewPass() {
 
   return (
     <>
-        <div className='bg-[#899878] min-h-[513px]'>
+        <div className='g-[#899878] min-h-[470px]'>
         <div className='flex justify-center py-10'>
           <form 
           onSubmit={handleLogin}

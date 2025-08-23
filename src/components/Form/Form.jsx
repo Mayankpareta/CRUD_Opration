@@ -7,6 +7,7 @@ function Form() {
   const navigate = useNavigate()
   const { fetchUsers, editingUserData, setEditingUserData, API_URL } = useOutletContext();
 
+    const [ error , setError ] = useState('')
     const [formData, setFormData] = useState({
         userName: '',
         full_name: '',
@@ -46,7 +47,8 @@ function Form() {
    
      
      const handleSubmitForm = async (e) => {
-       e.preventDefault();
+        e.preventDefault();
+        setError('');
         const addEditUser =  {        
             ...formData,
             specialist : Array.isArray(formData.specialist) ? formData.specialist : 
@@ -74,17 +76,22 @@ function Form() {
                 password: '',
             });
             fetchUsers();
+            navigate("/login")
         } catch (error) {
-            console.error('Adding/Updating user failed', error);
+            if(error.response) {
+                setError(error.response.data.message || 'Something went wrong');
+            } else {
+                setError("Something went wrong");
+            }
         }
-        navigate("/login")
+        
     };
 
 
   return (
     <>
-         <div className='bg-[#899878] min-h-[513px]'>
-        <div className='flex justify-center'>
+         <div className='g-[#899878] min-h-[470px] flex flex-col justify-center'>
+        <div className='flex justify-center bg-white/10 w-6/12 mx-auto rounded-xl'>
           <form 
           onSubmit={handleSubmitForm}
           className='py-7 min-w-80'>
@@ -96,7 +103,7 @@ function Form() {
               onChange={handleChange}
               type='text'
               placeholder='Enter Your UserName'
-              className='bg-[#899878] border border-gray-900 px-2 mx-7 '
+              className='g-[#899878] bg-white/20 px-2 mx-7 '
               required
               />
             </div>
@@ -108,7 +115,7 @@ function Form() {
               onChange={handleChange}
               type='text'
               placeholder='Enter Your Full Name'
-              className='bg-[#899878] border border-gray-900 px-2  mx-7 '
+              className='g-[#899878] bg-white/20 px-2  mx-7 '
               required
               />
             </div>
@@ -120,15 +127,15 @@ function Form() {
               onChange={handleChange}
               type='email'
               placeholder='Enter Your Email'
-              className='border border-gray-900 px-2 ml-[63px] bg-[#899878]'
+              className='bg-white/20 px-2 ml-[63px] g-[#899878]'
                required
               />
             </div>
-            <div className='my-3'>
+            {/* <div className='my-3'>
                 <label>Specialist:</label>
                 <select
                 value={formData.specialist}
-                className='ml-9'
+                className='ml-9 bg-white/20 text-black'
                 name='specialist'
                 onChange={(e) => {
                 setFormData({
@@ -138,24 +145,25 @@ function Form() {
                 }}
                 required
                 >
-                <option value=''>--Select--</option>
+                <option value=''>Select</option>
                 <option value='male'>Male</option>
                 <option value='female'>Female</option>
                 <option value='Kid'>Kid</option>
                 </select>
-            </div>
+            </div> */}
             <div className='my-3'>
                 <label>Gender:</label>
                 <select
                 value={formData.gender}
                 name='gender'
-                className='ml-12'
+                className='ml-12 bg-white/20 text-black'
                 onChange={handleChange}
                 required
                 >
-                <option value=''>--Select--</option>
+                <option className='' value=''>Select</option>
                 <option value='male'>Male</option>
                 <option value='female'>Female</option>
+                <option value='other'>Other</option>
                 </select>
             </div>
             <div className='my-3'>
@@ -166,7 +174,7 @@ function Form() {
               onChange={handleChange}
               type='number'
               placeholder='Enter Your Phone No'
-              className='border border-gray-900 px-2 ml-7 bg-[#899878]'
+              className='bg-white/20 px-2 ml-7 g-[#899878]'
                required
               />
             </div>
@@ -178,7 +186,7 @@ function Form() {
               onChange={handleChange}
               type='date'
               placeholder='Date Of Birth'
-              className='border border-gray-900 px-2 mx-2 w-[197px] bg-[#899878]'
+              className='bg-white/20 px-2 mx-2 w-[197px] g-[#899878]'
                required
               />
             </div>
@@ -192,14 +200,13 @@ function Form() {
                 onChange={handleChange}
                 type='password'
                 placeholder='Password'
-                className='border border-gray-900 px-2 ml-9 bg-[#899878]'                
+                className='bg-white/20 px-2 ml-9 g-[#899878]'                
                 />
               </div>          
-            )}
-            
+            )}            
             <button 
             type='submit'
-            className='border bg-[#6E7B65] border[#727108] px-3 w-76 hover:bg-[#4b5446]'>{editingUserData ? "Update" : "Register"}</button>
+            className='g-[#6E7B65] bg-white/40 px-3 w-76 py-0.5 hover:text-black hover:bg-white/50'>{editingUserData ? "Update" : "Register"}</button>
           </form>
         </div>
       </div>

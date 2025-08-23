@@ -13,9 +13,9 @@ function Footer() {
   return (
     <>
         <div>
-            <div className='bg-[#6E7B65] border-t border-black h-16 px-4 py-2 grid grid-cols-3'>
+            <div className='g-[#6E7B65] bg-white/10 h-10 border-t border-white/30'>
                 <div>
-                   <h1 className='text-3xl'>Footer</h1>
+                   
                 </div>       
             </div>
         </div>
